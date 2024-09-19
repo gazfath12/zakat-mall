@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Zakat Maal</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Kalkulator Zakat</h1>
+        <form id="formZakat">
+            <label for="gaji">
+                <h4>Gaji Saya Perbulan</h4>
+                <input type="number" inputmode="numeric" id="gaji" required/>
+            </label>
+            <label for="lain">
+                <h4>Penghasilan Lain Lain Per Bulan</h4>
+                <input type="number" inputmode="numeric" id="lain" required/>
+            </label>
+            <label for="nisabPertahun">
+                <h4>Nisab Pertahun</h4>
+                <input type="number" value="82312725" readonly id="nisabPertahun"/>
+            </label>
+            <label for="nisabPerbulan">
+                <h4>Nisab Perbulan</h4>
+                <input type="number" value="6859394" readonly id="nisabPerbulan"/>
+            </label>
+            <button type="submit">Hitung Zakat</button>
+        </form>
+        <div class="alert" id="alert"></div>
+    </div>
+    <script>
+        document.getElementById("formZakat").addEventListener("submit",(event)=> {
+            event.preventDefault();
+
+            const gaji = parseFloat(document.getElementById("gaji").value);
+            const lain = parseFloat(document.getElementById("lain").value);
+            const nisabPertahun = parseFloat(document.getElementById("nisabPertahun").value);
+
+            const totalPenghasilanBulanan = gaji + lain;
+            const totalPenghasilanTahunan = totalPenghasilanBulanan * 12;
+            const zakat = (totalPenghasilanBulanan * 2.5) / 100;
+            const zakatTahunan = zakat * 12;
+
+            const alertElement = document.getElementById("alert");
+
+            if (totalPenghasilanTahunan >= nisabPertahun) {
+                alertElement.textContent = `Anda harus membayar zakat sebesar Rp ${zakatTahunan.toFixed(2)} per tahun atau Rp ${zakat.toFixed(2)} per bulan.`;
+                alertElement.style.display = "block";
+                alertElement.style.backgroundColor = "#fefefe";
+                alertElement.style.color = "black";
+                alertElement.style.borderColor = "blue";
+            } else {
+                alertElement.textContent = "Anda tidak wajib membayar zakat.";
+                alertElement.style.display = "block";
+                alertElement.style.backgroundColor = "blue";
+                alertElement.style.color = "#fff";
+                alertElement.style.borderColor = "orange";
+            }
+        });
+    </script>
+</body>
+</html>
